@@ -1,13 +1,8 @@
 package ${package_name}.service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,8 +10,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ${package_name}.${block}.dto.${table_name?cap_first}Dto;
-import ${package_name}.dto.CommResp;
+import java.util.List;
 
 /**
  * className: ${table_name?cap_first}TestService <BR>
@@ -48,7 +42,6 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andDo(MockMvcResultHandlers.print())
         .andReturn().getResponse().getContentAsString();
-        System.out.println("--------\r 返回的json = " + responseString);
         return responseString;
     }
 
@@ -58,7 +51,20 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
         BaseDataUtil.mockExecute(mockMvc, builder, devToken);
     }
 
-    public void query(MockMvc mockMvc,String devToken) throws Exception{
+    public String findById(Long id,MockMvc mockMvc,String devToken) throws Exception {
+        String responseString = mockMvc.perform(
+        MockMvcRequestBuilders.get("/${path}/findById")
+        .param("id",String.valueOf(id))
+        .param("access_token",devToken)
+        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+        )
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andDo(MockMvcResultHandlers.print())
+        .andReturn().getResponse().getContentAsString();
+        return responseString;
+    }
+
+    public String query(MockMvc mockMvc,String devToken) throws Exception{
         List<String> list = listA.get(1);
         String responseString = mockMvc.perform(
         MockMvcRequestBuilders.get("/${path}")
@@ -71,33 +77,7 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
         .andExpect(MockMvcResultMatchers.status().isOk())
         .andDo(MockMvcResultHandlers.print())
         .andReturn().getResponse().getContentAsString();
-        // 断言  ${author};
-        Assert.assertEquals("SUCCESS", JSON.parseObject(responseString).getString("code"));
-        System.out.println("--------\r 返回的json = " + responseString);
-        CommResp<List<?>> commResp = JSONObject
-        .parseObject(responseString, new TypeReference<CommResp<List<?>>>() {
-        });
-        List<?> itemList =commResp.getData().getDataInfo();
-        Assert.assertTrue(itemList.size()>0);
-    }
-
-    public ${table_name?cap_first}Dto findById(Long id,MockMvc mockMvc,String devToken) throws Exception {
-        String responseString = mockMvc.perform(
-        MockMvcRequestBuilders.get("/${path}/findById")
-        .param("id",String.valueOf(id))
-        .param("access_token",devToken)
-        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-        )
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andDo(MockMvcResultHandlers.print())
-        .andReturn().getResponse().getContentAsString();
-        // 断言  ChenQi;
-        Assert.assertEquals("SUCCESS", JSON.parseObject(responseString).getString("code"));
-        System.out.println("--------\r 返回的json = " + responseString);
-        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
-        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
-        });
-        return commResp.getData().getDataInfo();
+        return responseString;
     }
 
 }

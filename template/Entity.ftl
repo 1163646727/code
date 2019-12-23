@@ -32,17 +32,20 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
 <#--根据字段的类型，创建对应的属性-->
 <#if (item.name?uncap_first != 'id') && (item.name?uncap_first != 'itemCode') && (item.name?uncap_first != 'itemName') && (item.name?uncap_first != 'itemType')>
     /** ${item.annotation!} ${author}*/
-<#if (item.type = 'varchar' || item.type = 'text')>
+<#if (item.type = 'varchar' || item.type = 'text' || item.type = 'String')>
     private String ${item.name?uncap_first};
 </#if>
 <#if item.type = 'timestamp' >
     private Date ${item.name?uncap_first};
 </#if>
-<#if item.type = 'numeric' >
+<#if (item.type = 'numeric' || item.type = 'Float') >
     private Float ${item.name?uncap_first};
 </#if>
-<#if item.type = 'bigint' >
+<#if (item.type = 'bigint' || item.type = 'Long'|| item.type = 'long') >
     private Long ${item.name?uncap_first};
+</#if>
+<#if (item.type = 'int' || item.type = 'Integer') >
+    private Integer ${item.name?uncap_first};
 </#if>
 </#if>
 </#list>
@@ -53,17 +56,20 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
 <#--根据字段的类型，创建对应的属性-->
 <#if (item.name != 'id')>
     /** ${item.annotation!} ${author}*/
-<#if (item.type = 'varchar' || item.type = 'text')>
+<#if (item.type = 'varchar' || item.type = 'text' || item.type = 'String')>
     private String ${item.name?uncap_first};
 </#if>
 <#if item.type = 'timestamp' >
     private Date ${item.name?uncap_first};
 </#if>
-<#if item.type = 'numeric' >
+<#if (item.type = 'numeric' || item.type = 'Float') >
     private Float ${item.name?uncap_first};
 </#if>
-<#if item.type = 'bigint' >
+<#if (item.type = 'bigint' || item.type = 'Long'|| item.type = 'long') >
     private Long ${item.name?uncap_first};
+</#if>
+<#if (item.type = 'int' || item.type = 'Integer') >
+    private Integer ${item.name?uncap_first};
 </#if>
 </#if>
 </#list>

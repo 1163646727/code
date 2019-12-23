@@ -482,8 +482,8 @@ public class CodeGenerateUtils {
         Table table = new Table();
         List<Field> list = new ArrayList<>();
         Field field = new Field();
-        table.setName("student");
-        table.setAnnotation("测试字典表");
+        table.setName("NursePlanEvalRec2");
+        table.setAnnotation("护理计划评价");
         entityMap.put("table", table);
 
         field.setName("id");
@@ -492,9 +492,69 @@ public class CodeGenerateUtils {
         list.add(field);
 
         field = new Field();
-        field.setName("sex");
-        field.setType("varchar");
-        field.setAnnotation("性别");
+        field.setName("patNo");
+        field.setType("String");
+        field.setAnnotation("患者标识（会员号）");
+        list.add(field);
+
+        field = new Field();
+        field.setName("visitId");
+        field.setType("Long");
+        field.setAnnotation("就诊记录ID");
+        list.add(field);
+
+        field = new Field();
+        field.setName("planId");
+        field.setType("Long");
+        field.setAnnotation("护理计划Id ");
+        list.add(field);
+
+        field = new Field();
+        field.setName("evalResult");
+        field.setType("String");
+        field.setAnnotation("评价结果");
+        list.add(field);
+
+        field = new Field();
+        field.setName("evalTime");
+        field.setType("String");
+        field.setAnnotation("评价时间");
+        list.add(field);
+
+        field = new Field();
+        field.setName("evalUserId");
+        field.setType("Long");
+        field.setAnnotation("评价用户Id");
+        list.add(field);
+
+        field = new Field();
+        field.setName("patId");
+        field.setType("Long");
+        field.setAnnotation("患者ID");
+        list.add(field);
+
+        field = new Field();
+        field.setName("evalUserName");
+        field.setType("String");
+        field.setAnnotation("评价人姓名");
+        list.add(field);
+
+        field = new Field();
+        field.setName("canceled");
+        field.setType("String");
+        field.setAnnotation("是否被取消(0.否;1.是)");
+        list.add(field);
+
+        field = new Field();
+        field.setName("cancelUserId");
+        field.setType("Long");
+        field.setAnnotation("取消用户Id");
+        list.add(field);
+
+        field = new Field();
+        field.setName("cancelUserName");
+        field.setType("String");
+        field.setAnnotation("取消人姓名");
         list.add(field);
 
 
@@ -502,42 +562,6 @@ public class CodeGenerateUtils {
 
         metadataList.add(entityMap);
 
-        entityMap = new HashMap<>();
-        table = new Table();
-        table.setName("persionDict");
-        table.setAnnotation("人员字典表");
-        entityMap.put("table", table);
-
-        list = new ArrayList<>();
-        field = new Field();
-        field.setName("id");
-        field.setType("bigint");
-        field.setAnnotation("主键");
-        list.add(field);
-
-        /*
-        field = new Field();
-        field.setName("itemCode");
-        field.setType("varchar");
-        field.setAnnotation("编码");
-        list.add(field);
-
-        field = new Field();
-        field.setName("itemName");
-        field.setType("varchar");
-        field.setAnnotation("名称");
-        list.add(field);
-        */
-
-        field = new Field();
-        field.setName("sex");
-        field.setType("varchar");
-        field.setAnnotation("性别");
-        list.add(field);
-
-        entityMap.put("field",list);
-
-        metadataList.add(entityMap);
         return metadataList;
     }
 
