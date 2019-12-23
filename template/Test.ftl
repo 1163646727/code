@@ -2,11 +2,14 @@ package ${package_name};
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.web.servlet.MockMvc;
+import org.ssh.boot.dto.CommResp;
 import ${package_name}.${block}.dao.${table_name?cap_first}Dao;
 import ${package_name}.${block}.dto.${table_name?cap_first}Dto;
 import ${package_name}.${block}.service.${table_name?cap_first}Service;
@@ -22,7 +25,8 @@ import ${package_name}.utils.cache.ICache;
  * createDate: ${date} <BR>
  */
 public class ${table_name?cap_first}ControllerTest extends BaseTest {
-
+    @Autowired
+    private MockMvc mockMvc;
     @Autowired
     ICache cache;
     @Value("${r'${oauth2.dev-token}'}")
@@ -44,10 +48,15 @@ public class ${table_name?cap_first}ControllerTest extends BaseTest {
     public void saveTest() throws Exception{
         // 获取数据 ${author}
         JSONObject jsob = getJsonData("${table_name?uncap_first}", ";", 1);
-        ${table_name?cap_first}Dto itemDto = ${table_name?uncap_first}TestService.save(jsob);
+        String responseString = ${table_name?uncap_first}TestService.save(jsob,mockMvc,devToken);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+        });
+        ${table_name?cap_first}Dto itemDto = commResp.getData().getDataInfo();
         // 断言 ${author}
         Long id = itemDto.getId();
         Assert.assertNotNull(${table_name?uncap_first}Dao.findById(id).get().getId());
+        Assert.assertEquals("SUCCESS", JSON.parseObject(responseString).getString("code"));
     }
 
     @Test
@@ -55,13 +64,17 @@ public class ${table_name?cap_first}ControllerTest extends BaseTest {
         // 获取数据 ${author}
         JSONObject jsob = getJsonData("${table_name?uncap_first}", ";", 1);
         // 新增数据  ${author};
-        ${table_name?cap_first}Dto itemDto = ${table_name?uncap_first}TestService.save(jsob);
+        String responseString = ${table_name?uncap_first}TestService.save(jsob,mockMvc,devToken);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+        });
+        ${table_name?cap_first}Dto itemDto = commResp.getData().getDataInfo();
         // 断言数据存在 ${author};
         Long id = itemDto.getId();
         Assert.assertNotNull(${table_name?uncap_first}Dao.findById(id).get().getId());
         String[] ids = {String.valueOf(id)};
         // 删除 ${author};
-        ${table_name?uncap_first}TestService .delete(ids);
+        ${table_name?uncap_first}TestService .delete(ids,mockMvc,devToken);
         // 断言数据已被删除 ${author};
         Assert.assertFalse(${table_name?uncap_first}Dao.findById(id).isPresent());
     }
@@ -71,14 +84,18 @@ public class ${table_name?cap_first}ControllerTest extends BaseTest {
         // 获取数据 ${author}
         JSONObject jsob = getJsonData("${table_name?uncap_first}", ";", 1);
         // 新增数据  ${author};
-        ${table_name?cap_first}Dto itemDto = ${table_name?uncap_first}TestService.save(jsob);
+        String responseString = ${table_name?uncap_first}TestService.save(jsob,mockMvc,devToken);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+        });
+        ${table_name?cap_first}Dto itemDto = commResp.getData().getDataInfo();
         // 断言数据存在 ${author};
         Long id = itemDto.getId();
         Assert.assertNotNull(${table_name?uncap_first}Dao.findById(id).get().getId());
         // 获取修改的数据 ${author}
         jsob = getJsonData("${table_name?uncap_first}", ";", 2);
         jsob.put("id", String.valueOf(id));
-        ${table_name?uncap_first}TestService.update(jsob);
+        ${table_name?uncap_first}TestService.update(jsob,mockMvc,devToken);
 
         // 查询最新的数据 ${author}
         JSONObject classObj = (JSONObject) JSON.toJSON(${table_name?uncap_first}Dao.findById(id).get());
@@ -91,11 +108,15 @@ public class ${table_name?cap_first}ControllerTest extends BaseTest {
         // 获取数据 ${author}
         JSONObject jsob = getJsonData("${table_name?uncap_first}", ";", 1);
         // 新增数据  ${author};
-        ${table_name?cap_first}Dto itemDto =${table_name?uncap_first}TestService.save(jsob);
+        String responseString = ${table_name?uncap_first}TestService.save(jsob,mockMvc,devToken);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+            });
+        ${table_name?cap_first}Dto itemDto = commResp.getData().getDataInfo();
         // 新增数据主键  ${author};
         Long id = itemDto.getId();
         // 断言 ${author}
-        Assert.assertNotNull(${table_name?uncap_first}TestService.findById(id).getId());
+        Assert.assertNotNull(${table_name?uncap_first}TestService.findById(id,mockMvc,devToken).getId());
     }
 
     @Test
@@ -103,8 +124,12 @@ public class ${table_name?cap_first}ControllerTest extends BaseTest {
         // 获取数据 ${author}
         JSONObject jsob = getJsonData("${table_name?uncap_first}", ";", 1);
         // 新增数据  ${author};
-        ${table_name?cap_first}Dto itemDto =${table_name?uncap_first}TestService.save(jsob);
+        String responseString = ${table_name?uncap_first}TestService.save(jsob,mockMvc,devToken);
+        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
+        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
+        });
+        ${table_name?cap_first}Dto itemDto = commResp.getData().getDataInfo();
         // 根据条件分页查询 ${author}
-        ${table_name?uncap_first}TestService.query();
+        ${table_name?uncap_first}TestService.query(mockMvc,devToken);
     }
 }

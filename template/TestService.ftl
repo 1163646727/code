@@ -29,24 +29,16 @@ import ${package_name}.dto.CommResp;
 @Service
 public class ${table_name?cap_first}TestService extends BaseParamService{
 
-    @Autowired
-    private MockMvc mockMvc;
-    @Value("${r'${oauth2.dev-token}'}")
-    private String devToken;
-
     List<List<String>> listA = getData("${table_name?uncap_first}",";");
 
-    public ${table_name?cap_first}Dto save(JSONObject jsob) throws Exception{
+    public String save(JSONObject jsob,MockMvc mockMvc,String devToken) throws Exception{
         MockHttpServletRequestBuilder builder = BaseDataUtil
         .getBuilder(jsob, "post", "/${path}");
         String responseString = BaseDataUtil.mockExecute(mockMvc, builder, devToken);
-        CommResp<${table_name?cap_first}Dto> commResp = JSONObject
-        .parseObject(responseString, new TypeReference<CommResp<${table_name?cap_first}Dto>>() {
-        });
-        return commResp.getData().getDataInfo();
+        return responseString;
     }
 
-    public String delete(String[] ids) throws Exception {
+    public String delete(String[] ids,MockMvc mockMvc,String devToken) throws Exception {
         String responseString = mockMvc.perform(
         MockMvcRequestBuilders.delete("/${path}")
         .param("ids",ids)
@@ -60,13 +52,13 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
         return responseString;
     }
 
-    public void update(JSONObject jsob) throws Exception{
+    public void update(JSONObject jsob,MockMvc mockMvc,String devToken) throws Exception{
         MockHttpServletRequestBuilder builder = BaseDataUtil
         .getBuilder(jsob, "put", "/${path}");
         BaseDataUtil.mockExecute(mockMvc, builder, devToken);
     }
 
-    public void query() throws Exception{
+    public void query(MockMvc mockMvc,String devToken) throws Exception{
         List<String> list = listA.get(1);
         String responseString = mockMvc.perform(
         MockMvcRequestBuilders.get("/${path}")
@@ -89,7 +81,7 @@ public class ${table_name?cap_first}TestService extends BaseParamService{
         Assert.assertTrue(itemList.size()>0);
     }
 
-    public ${table_name?cap_first}Dto findById(Long id) throws Exception {
+    public ${table_name?cap_first}Dto findById(Long id,MockMvc mockMvc,String devToken) throws Exception {
         String responseString = mockMvc.perform(
         MockMvcRequestBuilders.get("/${path}/findById")
         .param("id",String.valueOf(id))

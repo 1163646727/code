@@ -52,8 +52,8 @@ public class CodeGenerateUtils {
         /** 创建代码生成器工具类 ChenQi*/
         CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
         // 选择项目与模块 ChenQi
-        String pro = PRO_HISDATA;
-        String block = BLOCK_HISDATA;
+        String pro = PRO_NURSE;
+        String block = BLOCK_NURSE;
         /** 创建元数据集合 ChenQi*/
         List<Map<String,Object>> metadataList = generateMetadata();
         for (Map<String,Object> map : metadataList) {
