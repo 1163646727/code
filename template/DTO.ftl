@@ -50,6 +50,9 @@ public class ${table_name?cap_first}Dto {
 <#if (item.type = 'int' || item.type = 'Integer') >
     private Integer ${item.name?uncap_first};
 </#if>
+<#if (item.type = 'Boolean' || item.type = 'boolean') >
+    private Boolean ${item.name?uncap_first};
+</#if>
 </#if>
 </#list>
 </#if>
@@ -74,6 +77,9 @@ public class ${table_name?cap_first}Dto {
 </#if>
 <#if (item.type = 'int' || item.type = 'Integer') >
     private Integer ${item.name?uncap_first};
+</#if>
+<#if (item.type = 'Boolean' || item.type = 'boolean') >
+    private Boolean ${item.name?uncap_first};
 </#if>
 </#if>
 </#list>

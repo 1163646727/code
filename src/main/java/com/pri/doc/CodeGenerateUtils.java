@@ -52,8 +52,8 @@ public class CodeGenerateUtils {
         /** 创建代码生成器工具类 ChenQi*/
         CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
         // 选择项目与模块 ChenQi
-        String pro = PRO_NURSE;
-        String block = BLOCK_NURSE;
+        String pro = PRO_NURSE_DICT;
+        String block = BLOCK_NURSE_DICT;
         /** 创建元数据集合 ChenQi*/
         List<Map<String,Object>> metadataList = generateMetadata();
         for (Map<String,Object> map : metadataList) {
@@ -482,8 +482,8 @@ public class CodeGenerateUtils {
         Table table = new Table();
         List<Field> list = new ArrayList<>();
         Field field = new Field();
-        table.setName("NursePlanEvalRec2");
-        table.setAnnotation("护理计划评价");
+        table.setName("NurseDiagnosisDict2");
+        table.setAnnotation("护理诊断字典系");
         entityMap.put("table", table);
 
         field.setName("id");
@@ -492,69 +492,40 @@ public class CodeGenerateUtils {
         list.add(field);
 
         field = new Field();
-        field.setName("patNo");
+        field.setName("nurseDiagClassCode");
         field.setType("String");
-        field.setAnnotation("患者标识（会员号）");
+        field.setAnnotation("诊断分类编码");
         list.add(field);
 
         field = new Field();
-        field.setName("visitId");
-        field.setType("Long");
-        field.setAnnotation("就诊记录ID");
-        list.add(field);
-
-        field = new Field();
-        field.setName("planId");
-        field.setType("Long");
-        field.setAnnotation("护理计划Id ");
-        list.add(field);
-
-        field = new Field();
-        field.setName("evalResult");
+        field.setName("nurseDiagClass");
         field.setType("String");
-        field.setAnnotation("评价结果");
+        field.setAnnotation("诊断分类");
         list.add(field);
 
         field = new Field();
-        field.setName("evalTime");
+        field.setName("ruleInstName");
         field.setType("String");
-        field.setAnnotation("评价时间");
+        field.setAnnotation("规则实例名称");
         list.add(field);
 
         field = new Field();
-        field.setName("evalUserId");
-        field.setType("Long");
-        field.setAnnotation("评价用户Id");
-        list.add(field);
-
-        field = new Field();
-        field.setName("patId");
-        field.setType("Long");
-        field.setAnnotation("患者ID");
-        list.add(field);
-
-        field = new Field();
-        field.setName("evalUserName");
+        field.setName("descript");
         field.setType("String");
-        field.setAnnotation("评价人姓名");
+        field.setAnnotation("诊断依据");
         list.add(field);
 
         field = new Field();
-        field.setName("canceled");
-        field.setType("String");
-        field.setAnnotation("是否被取消(0.否;1.是)");
+        field.setName("disabled");
+        field.setType("Boolean");
+        field.setAnnotation("停用标识（true为停用;默认false）");
         list.add(field);
 
-        field = new Field();
-        field.setName("cancelUserId");
-        field.setType("Long");
-        field.setAnnotation("取消用户Id");
-        list.add(field);
 
         field = new Field();
-        field.setName("cancelUserName");
-        field.setType("String");
-        field.setAnnotation("取消人姓名");
+        field.setName("isPopupRemind");
+        field.setType("Integer");
+        field.setAnnotation("是否弹窗提醒(0-否;1-是)");
         list.add(field);
 
 
