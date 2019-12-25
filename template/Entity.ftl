@@ -2,6 +2,8 @@ package ${package_name}.${block}.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 <#if (table_name?substring(table_name?length-4,table_name?length) = 'Dict') >
 import org.ssh.boot.businessCommon.entity.BaseItemEntity;
@@ -25,12 +27,17 @@ public class ${table_name?cap_first} extends BaseItemEntity {
 <#else ><#--如果是字典Dict结尾，否则-->
 public class ${table_name?cap_first} extends BaseBusinessEntity {
 </#if>
-
 <#if (table_name?substring(table_name?length-4,table_name?length) = 'Dict') ><#--如果是字典Dict结尾-->
 <#if field?exists><#--field:参数集合-->
 <#list field as item>
 <#--根据字段的类型，创建对应的属性-->
 <#if (item.name?uncap_first != 'id') && (item.name?uncap_first != 'itemCode') && (item.name?uncap_first != 'itemName') && (item.name?uncap_first != 'itemType')>
+<#if item.canNull = '0'>
+    @NotNull
+    @Column(
+        nullable = false
+    )
+</#if>
     /** ${item.annotation!} ${author}*/
 <#if (item.type = 'varchar' || item.type = 'text' || item.type = 'String')>
     private String ${item.name?uncap_first};
@@ -51,6 +58,7 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
     private Boolean ${item.name?uncap_first};
 </#if>
 </#if>
+
 </#list>
 </#if>
 <#else ><#--如果是字典Dict结尾，否则-->
@@ -58,6 +66,12 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
 <#list field as item>
 <#--根据字段的类型，创建对应的属性-->
 <#if (item.name != 'id')>
+<#if item.canNull = '0'>
+    @NotNull
+    @Column(
+        nullable = false
+    )
+</#if>
     /** ${item.annotation!} ${author}*/
 <#if (item.type = 'varchar' || item.type = 'text' || item.type = 'String')>
     private String ${item.name?uncap_first};
@@ -78,6 +92,7 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
     private Boolean ${item.name?uncap_first};
 </#if>
 </#if>
+
 </#list>
 </#if>
 </#if>

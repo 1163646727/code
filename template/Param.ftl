@@ -29,7 +29,7 @@ public class ${table_name?cap_first}Param {
 <#list field as item>
 <#if (item.name?uncap_first != 'id') && (item.name?uncap_first != 'itemCode') && (item.name?uncap_first != 'itemName') && (item.name?uncap_first != 'itemType')>
     /** ${item.annotation!} ${author}*/
-    @ApiModelProperty(value = "${item.annotation}", required = true)
+    @ApiModelProperty(value = "${item.annotation}"<#if item.canNull = '0'>, required = true</#if>)
 <#--根据字段的类型，创建对应的属性-->
 <#if (item.type = 'varchar' || item.type = 'text'|| item.type = 'String')>
     private String ${item.name?uncap_first};
@@ -50,6 +50,7 @@ public class ${table_name?cap_first}Param {
     private Boolean ${item.name?uncap_first};
 </#if>
 </#if>
+
 </#list>
 </#if>
 
@@ -58,7 +59,7 @@ public class ${table_name?cap_first}Param {
 <#list field as item>
 <#if (item.name != 'id')>
     /** ${item.annotation!} ${author}*/
-    @ApiModelProperty(value = "${item.annotation}", required = true)
+    @ApiModelProperty(value = "${item.annotation}"<#if item.canNull = '0'>, required = true</#if>)
 <#--根据字段的类型，创建对应的属性-->
 <#if (item.type = 'varchar' || item.type = 'text'|| item.type = 'String')>
     private String ${item.name?uncap_first};
@@ -79,6 +80,7 @@ public class ${table_name?cap_first}Param {
     private Boolean ${item.name?uncap_first};
 </#if>
 </#if>
+
 </#list>
 </#if>
 </#if>

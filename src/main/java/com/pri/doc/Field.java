@@ -18,6 +18,9 @@ public class Field {
     /** 注释、备注信息 ChenQi*/
     private String annotation;
 
+    /** 是否允许为空(0.不允许1.允许)，默认允许为空 ChenQi*/
+    private String canNull = "1";
+
     public String getName() {
         return name;
     }
@@ -40,5 +43,13 @@ public class Field {
 
     public void setAnnotation(String annotation) {
         this.annotation = annotation;
+    }
+
+    public String getCanNull() {
+        return canNull;
+    }
+
+    public void setCanNull(String canNull) {
+        this.canNull = canNull;
     }
 }

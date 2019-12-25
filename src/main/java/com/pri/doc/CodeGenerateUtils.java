@@ -52,8 +52,8 @@ public class CodeGenerateUtils {
         /** 创建代码生成器工具类 ChenQi*/
         CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
         // 选择项目与模块 ChenQi
-        String pro = PRO_NURSE_DICT;
-        String block = BLOCK_NURSE_DICT;
+        String pro = PRO_Manager;
+        String block = BLOCK_Manager;
         /** 创建元数据集合 ChenQi*/
         List<Map<String,Object>> metadataList = generateMetadata();
         for (Map<String,Object> map : metadataList) {
@@ -482,8 +482,8 @@ public class CodeGenerateUtils {
         Table table = new Table();
         List<Field> list = new ArrayList<>();
         Field field = new Field();
-        table.setName("NurseDiagnosisDict2");
-        table.setAnnotation("护理诊断字典系");
+        table.setName("ClinicObserveDict2");
+        table.setAnnotation("临床观测指标字典");
         entityMap.put("table", table);
 
         field.setName("id");
@@ -492,40 +492,48 @@ public class CodeGenerateUtils {
         list.add(field);
 
         field = new Field();
-        field.setName("nurseDiagClassCode");
+        field.setName("code");
         field.setType("String");
-        field.setAnnotation("诊断分类编码");
+        field.setAnnotation("编码");
+        field.setCanNull("0");
         list.add(field);
 
         field = new Field();
-        field.setName("nurseDiagClass");
+        field.setName("name");
         field.setType("String");
-        field.setAnnotation("诊断分类");
+        field.setAnnotation("名称");
         list.add(field);
 
         field = new Field();
-        field.setName("ruleInstName");
+        field.setName("dataType");
         field.setType("String");
-        field.setAnnotation("规则实例名称");
+        field.setAnnotation("数据类型");
         list.add(field);
 
         field = new Field();
-        field.setName("descript");
+        field.setName("rangeTypeDictCode");
         field.setType("String");
-        field.setAnnotation("诊断依据");
+        field.setAnnotation("范围 关联T_RangeTypeDict.itemCode");
+        list.add(field);
+
+        field = new Field();
+        field.setName("rangeTypeDictName");
+        field.setType("String");
+        field.setAnnotation("范围 关联T_RangeTypeDict.itemName");
+        list.add(field);
+
+
+        field = new Field();
+        field.setName("length");
+        field.setType("Integer");
+        field.setAnnotation("长度");
         list.add(field);
 
         field = new Field();
         field.setName("disabled");
-        field.setType("Boolean");
+        field.setType("boolean");
         field.setAnnotation("停用标识（true为停用;默认false）");
-        list.add(field);
-
-
-        field = new Field();
-        field.setName("isPopupRemind");
-        field.setType("Integer");
-        field.setAnnotation("是否弹窗提醒(0-否;1-是)");
+        field.setCanNull("0");
         list.add(field);
 
 
