@@ -52,8 +52,8 @@ public class CodeGenerateUtils {
         /** 创建代码生成器工具类 ChenQi*/
         CodeGenerateUtils codeGenerateUtils = new CodeGenerateUtils();
         // 选择项目与模块 ChenQi
-        String pro = PRO_Manager;
-        String block = BLOCK_Manager;
+        String pro = PRO_HISDATA;
+        String block = BLOCK_HISDATA;
         /** 创建元数据集合 ChenQi*/
         List<Map<String,Object>> metadataList = generateMetadata();
         for (Map<String,Object> map : metadataList) {
@@ -464,87 +464,6 @@ public class CodeGenerateUtils {
         template.process(dataMap,out);
     }
 
-
-    /**
-     * methodName: generateMetadata <BR>
-     * description: 创建元数据集合<BR>
-     * remark: <BR>
-     * param:  <BR>
-     * return: java.util.List<java.util.Map<java.lang.String,java.lang.Object>> <BR>
-     * author: ChenQi <BR>
-     * createDate: 2019-11-30 15:04 <BR>
-     */
-    public static List<Map<String,Object>> generateMetadata(){
-
-        List<Map<String,Object>> metadataList = new ArrayList<>();
-
-        Map<String,Object> entityMap = new HashMap<>();
-        Table table = new Table();
-        List<Field> list = new ArrayList<>();
-        Field field = new Field();
-        table.setName("ClinicObserveDict2");
-        table.setAnnotation("临床观测指标字典");
-        entityMap.put("table", table);
-
-        field.setName("id");
-        field.setType("bigint");
-        field.setAnnotation("主键");
-        list.add(field);
-
-        field = new Field();
-        field.setName("code");
-        field.setType("String");
-        field.setAnnotation("编码");
-        field.setCanNull("0");
-        list.add(field);
-
-        field = new Field();
-        field.setName("name");
-        field.setType("String");
-        field.setAnnotation("名称");
-        list.add(field);
-
-        field = new Field();
-        field.setName("dataType");
-        field.setType("String");
-        field.setAnnotation("数据类型");
-        list.add(field);
-
-        field = new Field();
-        field.setName("rangeTypeDictCode");
-        field.setType("String");
-        field.setAnnotation("范围 关联T_RangeTypeDict.itemCode");
-        list.add(field);
-
-        field = new Field();
-        field.setName("rangeTypeDictName");
-        field.setType("String");
-        field.setAnnotation("范围 关联T_RangeTypeDict.itemName");
-        list.add(field);
-
-
-        field = new Field();
-        field.setName("length");
-        field.setType("Integer");
-        field.setAnnotation("长度");
-        list.add(field);
-
-        field = new Field();
-        field.setName("disabled");
-        field.setType("boolean");
-        field.setAnnotation("停用标识（true为停用;默认false）");
-        field.setCanNull("0");
-        list.add(field);
-
-
-        entityMap.put("field",list);
-
-        metadataList.add(entityMap);
-
-        return metadataList;
-    }
-
-
     /**
      * methodName: toUpperCaseFirstOne <BR>
      * description:首字母转大写 <BR>
@@ -617,6 +536,63 @@ public class CodeGenerateUtils {
     public static String getBasePackagePath(){
         String basePackagePath = System.getProperty("user.dir");
         return basePackagePath.substring(0, basePackagePath.lastIndexOf("\\"));
+    }
+
+    /**
+     * methodName: generateMetadata <BR>
+     * description: 创建元数据集合<BR>
+     * remark: <BR>
+     * param:  <BR>
+     * return: java.util.List<java.util.Map<java.lang.String,java.lang.Object>> <BR>
+     * author: ChenQi <BR>
+     * createDate: 2019-11-30 15:04 <BR>
+     */
+    public static List<Map<String,Object>> generateMetadata(){
+
+        List<Map<String,Object>> metadataList = new ArrayList<>();
+
+        Map<String,Object> entityMap = new HashMap<>();
+        Table table = new Table();
+        List<Field> list = new ArrayList<>();
+        Field field = new Field();
+        table.setName("DepartmentRedis2");
+        table.setAnnotation("新老科室对应关系表");
+        entityMap.put("table", table);
+
+        field.setName("id");
+        field.setType("bigint");
+        field.setAnnotation("主键");
+        list.add(field);
+
+        field = new Field();
+        field.setName("hospitalId");
+        field.setType("Long");
+        field.setAnnotation("机构ID");
+        field.setCanNull("0");
+        list.add(field);
+
+        field = new Field();
+        field.setName("oldDepartId");
+        field.setType("String");
+        field.setAnnotation("老科室编码(deptCode)");
+        field.setCanNull("0");
+        list.add(field);
+
+        field = new Field();
+        field.setName("newDepartId");
+        field.setType("Long");
+        field.setAnnotation("DepartmentDict.id");
+        field.setCanNull("0");
+        list.add(field);
+
+
+        entityMap.put("field",list);
+
+
+
+        metadataList.add(entityMap);
+
+        return metadataList;
     }
 }
 

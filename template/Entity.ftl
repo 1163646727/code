@@ -34,9 +34,7 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
 <#if (item.name?uncap_first != 'id') && (item.name?uncap_first != 'itemCode') && (item.name?uncap_first != 'itemName') && (item.name?uncap_first != 'itemType')>
 <#if item.canNull = '0'>
     @NotNull
-    @Column(
-        nullable = false
-    )
+    @Column(nullable = false)
 </#if>
     /** ${item.annotation!} ${author}*/
 <#if (item.type = 'varchar' || item.type = 'text' || item.type = 'String')>
@@ -68,9 +66,7 @@ public class ${table_name?cap_first} extends BaseBusinessEntity {
 <#if (item.name != 'id')>
 <#if item.canNull = '0'>
     @NotNull
-    @Column(
-        nullable = false
-    )
+    @Column(nullable = false)
 </#if>
     /** ${item.annotation!} ${author}*/
 <#if (item.type = 'varchar' || item.type = 'text' || item.type = 'String')>
